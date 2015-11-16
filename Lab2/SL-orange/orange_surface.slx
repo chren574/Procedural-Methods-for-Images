@@ -1,0 +1,25 @@
+surface
+AQSIS_V 2
+
+
+segment Data
+
+USES 133120
+
+varying  color Orange
+
+
+segment Init
+
+
+segment Code
+	pushif 0
+	pushif 0.600000024
+	pushif 1
+	settc
+	pop Orange
+	pushv N
+	diffuse
+	pushv Orange
+	mulcc
+	pop Ci

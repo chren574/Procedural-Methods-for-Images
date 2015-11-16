@@ -1,0 +1,18 @@
+
+public class OriginShader extends Shader{
+	
+	void shader(double[] p, double u, double v, double t) {
+		
+		double originU, originV, r;
+		
+		originU = 0.5 + Math.pow(u*t, 2)*Math.sin(t);
+		originV = 0.5 + Math.pow(v*t, 2)*Math.cos(t);
+		r = 1;
+		
+		p[0] = originU*r + originV*r;
+		//p[1] = originV*r;
+				
+		
+	}
+
+}

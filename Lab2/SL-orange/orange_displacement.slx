@@ -1,0 +1,211 @@
+displacement
+AQSIS_V 2
+
+
+segment Data
+
+USES 2304
+
+varying  point voronoi_f1_3d12::Ptex
+varying  point voronoi_f1_3d12::thiscell
+uniform  float voronoi_f1_3d12::i
+uniform  float voronoi_f1_3d12::j
+uniform  float voronoi_f1_3d12::k
+varying  point voronoi_f1_3d12::b13::b14::b15::testcell
+varying  point voronoi_f1_3d12::b13::b14::b15::testpos
+varying  vector voronoi_f1_3d12::b13::b14::b15::offset
+varying  float voronoi_f1_3d12::b13::b14::b15::dist
+output param varying  float oceanblend
+varying  float elevation
+varying  float f
+varying  point pos
+varying  point Plocal
+varying  float freq
+varying  float jitter
+varying  float granulate
+
+
+segment Init
+	pushif 0
+	pop oceanblend
+
+
+segment Code
+	pushif 0.5
+	pushv P
+	noise3
+	subff
+	pop elevation
+	pushif 50
+	setfp
+	pushv P
+	mulpp
+	pop Plocal
+	pushif 0.5
+	pop freq
+	pushif 1
+	pop jitter
+	pushv freq
+	setfp
+	pushv Plocal
+	mulpp
+	pop voronoi_f1_3d12::Ptex
+	pushif 0.5
+	pushv voronoi_f1_3d12::Ptex
+	zcomp
+	floor
+	addff
+	pushif 0.5
+	pushv voronoi_f1_3d12::Ptex
+	ycomp
+	floor
+	addff
+	pushif 0.5
+	pushv voronoi_f1_3d12::Ptex
+	xcomp
+	floor
+	addff
+	settp
+	pop voronoi_f1_3d12::thiscell
+	pushif 1
+	pushv freq
+	addff
+	pop f
+	pushif 1
+	negf
+	pop voronoi_f1_3d12::i
+	RS_PUSH
+:0
+	S_CLEAR
+	pushif 1
+	pushv voronoi_f1_3d12::i
+	leff
+	S_GET
+	S_JZ 1
+	RS_GET
+	RS_PUSH
+	pushif 1
+	negf
+	pop voronoi_f1_3d12::j
+	RS_PUSH
+:2
+	S_CLEAR
+	pushif 1
+	pushv voronoi_f1_3d12::j
+	leff
+	S_GET
+	S_JZ 3
+	RS_GET
+	RS_PUSH
+	pushif 1
+	negf
+	pop voronoi_f1_3d12::k
+	RS_PUSH
+:4
+	S_CLEAR
+	pushif 1
+	pushv voronoi_f1_3d12::k
+	leff
+	S_GET
+	S_JZ 5
+	RS_GET
+	RS_PUSH
+	pushv voronoi_f1_3d12::k
+	pushv voronoi_f1_3d12::j
+	pushv voronoi_f1_3d12::i
+	settv
+	pushv voronoi_f1_3d12::thiscell
+	addpp
+	pop voronoi_f1_3d12::b13::b14::b15::testcell
+	pushif 0.5
+	setfp
+	pushv voronoi_f1_3d12::b13::b14::b15::testcell
+	pcellnoise3
+	subpp
+	pushv jitter
+	mulfp
+	pushv voronoi_f1_3d12::b13::b14::b15::testcell
+	addpp
+	pop voronoi_f1_3d12::b13::b14::b15::testpos
+	pushv voronoi_f1_3d12::Ptex
+	pushv voronoi_f1_3d12::b13::b14::b15::testpos
+	subpp
+	pop voronoi_f1_3d12::b13::b14::b15::offset
+	pushv voronoi_f1_3d12::b13::b14::b15::offset
+	pushv voronoi_f1_3d12::b13::b14::b15::offset
+	dotpp
+	pop voronoi_f1_3d12::b13::b14::b15::dist
+	S_CLEAR
+	pushv f
+	pushv voronoi_f1_3d12::b13::b14::b15::dist
+	lsff
+	S_GET
+	RS_PUSH
+	RS_GET
+	RS_JZ 6
+	pushv voronoi_f1_3d12::b13::b14::b15::dist
+	pop f
+	pushv voronoi_f1_3d12::b13::b14::b15::testpos
+	pop pos
+:6
+	RS_POP
+	RS_POP
+	pushif 1
+	pushv voronoi_f1_3d12::k
+	addff
+	pop voronoi_f1_3d12::k
+	jmp 4
+:5
+	RS_POP
+	RS_POP
+	pushif 1
+	pushv voronoi_f1_3d12::j
+	addff
+	pop voronoi_f1_3d12::j
+	jmp 2
+:3
+	RS_POP
+	RS_POP
+	pushif 1
+	pushv voronoi_f1_3d12::i
+	addff
+	pop voronoi_f1_3d12::i
+	jmp 0
+:1
+	RS_POP
+	pushv freq
+	setfp
+	pushv pos
+	divpp
+	pop pos
+	pushv f
+	sqrt
+	pop f
+	pushif 1
+	pushif 0
+	pushv f
+	clamp
+	pop granulate
+	pushv granulate
+	setfp
+	pushif 0.00999999978
+	setfp
+	pushv N
+	mulpp
+	mulpp
+	pushv P
+	subpp
+	pop P
+	pushv elevation
+	setfp
+	pushif 0.200000003
+	setfp
+	pushv N
+	mulpp
+	mulpp
+	pushv P
+	addpp
+	pop P
+	pushv P
+	calculatenormal
+	pop N

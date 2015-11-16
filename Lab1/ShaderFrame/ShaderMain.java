@@ -26,7 +26,9 @@ public class ShaderMain {
 		//panel.myShader = new DemoShader();
 		//panel.myShader = new ColorShader();
 		//panel.myShader = new PulsShader();
-		panel.myShader = new WorleyShader();
+		//panel.myShader = new WorleyShader();
+		//panel.myShader = new B2WShader();
+		panel.myShader = new FunShader();
 
 		// Pack and display the window
 		frame.pack();
